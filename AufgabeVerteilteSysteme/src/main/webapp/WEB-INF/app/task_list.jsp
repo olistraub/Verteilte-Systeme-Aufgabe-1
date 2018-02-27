@@ -80,9 +80,11 @@
                         <tr>
                             <th>Bezeichnung</th>
                             <th>Kategorie</th>
-                            <th>Eigentümer</th>
-                            <th>Status</th>
-                            <th>Fällig am</th>
+                            <th>Benutzer</th>
+                            <th>Angebotstyp</th>
+                            <th>Preis</th>
+                            <th>Preistyp</th>
+                            <th>Datum</th>
                         </tr>
                     </thead>
                     <c:forEach items="${tasks}" var="task">
@@ -100,6 +102,12 @@
                             </td>
                             <td>
                                 <c:out value="${task.type.label}"/>
+                            </td>
+                              <td>
+                                <c:out value="${task.price}"/>
+                            </td>
+                              <td>
+                                <c:out value="${task.priceType.label}"/>
                             </td>
                             <td>
                                 <c:out value="${utils.formatDate(task.createdOnDate)}"/>

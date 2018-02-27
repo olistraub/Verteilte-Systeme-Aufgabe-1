@@ -39,13 +39,13 @@
         <form method="post" class="stacked">
             <div class="column">
                 <%-- CSRF-Token --%>
-                <input type="hidden" name="csrf_token" value="${csrf_token}">
+                <input type="hidden" name="csrf_token" value="${csrf_token}" ${readonly ? 'readonly="readonly"' : ''}>
 
                 <%-- Eingabefelder --%>
                 
                       <label for="task_category">Kategorie:</label>
                 <div class="side-by-side">
-                    <select name="task_category">
+                    <select name="task_category" ${readonly ? 'disabled="readonly"' : ''}>
                         <option value="">Keine Kategorie</option>
 
                         <c:forEach items="${categories}" var="category">
@@ -63,7 +63,7 @@
                     <span class="required">*</span>
                 </label>
                 <div class="side-by-side margin">
-                    <select name="task_status">
+                    <select name="task_status" ${readonly ? 'disabled="readonly"' : ''}>
                         <c:forEach items="${statuses}" var="status">
                             <option value="${status}" ${task_form.values["task_status"][0] == status ? 'selected' : ''}>
                                 <c:out value="${status.label}"/>
@@ -77,7 +77,7 @@
                     <span class="required">*</span>
                 </label>
                 <div class="side-by-side">
-                    <input type="text" name="task_short_text" value="${task_form.values["task_short_text"][0]}">
+                    <input type="text" name="task_short_text" value="${task_form.values["task_short_text"][0]}" ${readonly ? 'readonly="readonly"' : ''}>
                 </div>
       
                       
@@ -85,7 +85,7 @@
                     Beschreibung:
                 </label>
                 <div class="side-by-side">
-                    <textarea name="task_long_text"><c:out value="${task_form.values['task_long_text'][0]}"/></textarea>
+                    <textarea name="task_long_text" ${readonly ? 'readonly="readonly"' : ''}><c:out value="${task_form.values['task_long_text'][0]}"/></textarea>
                 </div>  
                       
                       
@@ -94,7 +94,7 @@
               
                 </label>
                 <div class="side-by-side">
-                         <select name="priceType">
+                         <select name="priceType" ${readonly ? 'disabled="readonly"' : ''}>
                         <c:forEach items="${priceType}" var="price">
                             <option value="${price}" ${task_form.values["priceType"][0] == price ? 'selected' : ''}>
                                 <c:out value="${price.label}"/>
@@ -103,7 +103,7 @@
                             
                          </select>
                     
-                    <input type="text" name="price_field" value="${task_form_values["price_field"][0]}">
+                    <input type="text" name="price_field" value="${task_form_values["price_field"][0]}" ${readonly ? 'readonly="readonly"' : ''}>
                 </div>
                          
                 <label for="lblAngelegt">
@@ -124,6 +124,8 @@
                    ${task_form.values["telefon"][0]}<br>
                     ${task_form.values["email"][0]}<br>
                 </div>
+        <c:if test="${readonly == false}">
+      
 
                 <%-- Button zum Abschicken --%>
                 <div class="side-by-side">
@@ -138,6 +140,7 @@
                     </c:if>
                 </div>
             </div>
+</c:if>
 
             <%-- Fehlermeldungen --%>
             <c:if test="${!empty task_form.errors}">

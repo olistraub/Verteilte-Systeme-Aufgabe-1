@@ -57,11 +57,18 @@ public class TaskEditServlet extends HttpServlet {
         request.setAttribute("categories", this.categoryBean.findAllSorted());
         request.setAttribute("statuses", AdvertType.values());
         request.setAttribute("priceType", PriceType.values());
-
+        
         // Zu bearbeitende Aufgabe einlesen
         HttpSession session = request.getSession();
 
         Task task = this.getRequestedTask(request);
+        
+        boolean readonly = true;
+        
+        if(task.getOwner().getUsername().equals(userBean.getCurrentUser().getUsername()))
+                readonly = false;
+        
+        request.setAttribute("readonly", readonly);
         request.setAttribute("edit", task.getId() != 0);
                                 
         if (session.getAttribute("task_form") == null) {
@@ -118,8 +125,8 @@ public class TaskEditServlet extends HttpServlet {
         String taskShortText = request.getParameter("task_short_text");
         String taskLongText = request.getParameter("task_long_text");
         String priceType = request.getParameter("priceType");
-        Task task = this.getRequestedTask(request);
-
+        String priceField = request.getParameter("price_field");
+        Task task = this.getRequestedTask(request);    PriceType.valueOf(priceType);
         
         
         if (taskCategory != null && !taskCategory.trim().isEmpty()) {
@@ -138,8 +145,22 @@ task.setcreatedOnTime(new Time(System.currentTimeMillis()));
         } catch (IllegalArgumentException ex) {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }
-
+        
+        if(priceField == "")
+            priceField = "0";
+        
+       try{
+       task.setPrice(Double.parseDouble(priceField));
+        }catch(NumberFormatException ex){
+            errors.add("Ungültiger Preis");
+        }
        
+           try {
+              task.setPriceType(PriceType.valueOf(priceType));
+        } catch (IllegalArgumentException ex) {
+            errors.add("Der ausgewählte Preistyp ist nicht vorhanden.");
+        }
+           
         task.setShortText(taskShortText);
         task.setLongText(taskLongText);
 
@@ -293,6 +314,13 @@ task.setcreatedOnTime(new Time(System.currentTimeMillis()));
                                 values.put("email", new String[]{
         task.getOwner().getEmail()
         });
+                                
+                                 values.put("price_field", new String[]{
+                                     
+        Double.toString(task.getPrice())
+        }); 
+                                             
+                                 
         FormValues formValues = new FormValues();
         formValues.setValues(values);
         return formValues;
