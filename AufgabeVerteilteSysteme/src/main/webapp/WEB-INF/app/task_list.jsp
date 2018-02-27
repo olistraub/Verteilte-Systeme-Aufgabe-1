@@ -99,11 +99,10 @@
                                 <c:out value="${task.owner.username}"/>
                             </td>
                             <td>
-                                <c:out value="${task.status.label}"/>
+                                <c:out value="${task.type.label}"/>
                             </td>
                             <td>
-                                <c:out value="${utils.formatDate(task.CreatedOnDate)}"/>
-                                <c:out value="${utils.formatTime(task.CreatedOnTime)}"/>
+                                <c:out value="${utils.formatDate(task.createdOnDate)}"/>
                             </td>
                         </tr>
                     </c:forEach>

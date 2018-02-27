@@ -50,26 +50,21 @@ public class Task implements Serializable {
     private String shortText;
 
     @Lob
-    @NotNull
     private String longText;
 
-    @Column(name = "CreatedOnDate")
     @NotNull(message = "Das Datum darf nicht leer sein.")
-    private Date CreatedOnDate = new Date(System.currentTimeMillis());
+    private Date createdOnDate = new Date(System.currentTimeMillis());
 
-    @Column(name = "CreatedOnTime")
     @NotNull(message = "Die Uhrzeit darf nicht leer sein.")
-    private Time CreatedOnTime = new Time(System.currentTimeMillis());
+    private Time createdOnTime = new Time(System.currentTimeMillis());
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     private PriceType priceType;
     
     @Enumerated(EnumType.STRING)
     @NotNull
     private AdvertType type;
 
-    @NotNull(message = "Der Preis darf nicht leer sein")
     private double price;
     
     
@@ -91,20 +86,20 @@ public class Task implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Setter und Getter">
 
-    public Date getCreatedOnDate() {
-        return CreatedOnDate;
+    public Date getcreatedOnDate() {
+        return createdOnDate;
     }
 
-    public void setCreatedOnDate(Date CreatedOnDate) {
-        this.CreatedOnDate = CreatedOnDate;
+    public void setcreatedOnDate(Date createdOnDate) {
+        this.createdOnDate = createdOnDate;
     }
 
-    public Time getCreatedOnTime() {
-        return CreatedOnTime;
+    public Time getcreatedOnTime() {
+        return createdOnTime;
     }
 
-    public void setCreatedOnTime(Time CreatedOnTime) {
-        this.CreatedOnTime = CreatedOnTime;
+    public void setcreatedOnTime(Time createdOnTime) {
+        this.createdOnTime = createdOnTime;
     }
 
     public PriceType getPriceType() {

@@ -15,6 +15,7 @@ import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Task;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.AdvertType;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.PriceType;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
@@ -55,6 +56,7 @@ public class TaskEditServlet extends HttpServlet {
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
         request.setAttribute("categories", this.categoryBean.findAllSorted());
         request.setAttribute("statuses", AdvertType.values());
+        request.setAttribute("priceType", PriceType.values());
 
         // Zu bearbeitende Aufgabe einlesen
         HttpSession session = request.getSession();
@@ -112,14 +114,14 @@ public class TaskEditServlet extends HttpServlet {
         List<String> errors = new ArrayList<>();
 
         String taskCategory = request.getParameter("task_category");
-        String taskCreatedOnDate = request.getParameter("task_due_date");
-        String taskCreatedOnTime = request.getParameter("task_due_time");
         String taskStatus = request.getParameter("task_status");
         String taskShortText = request.getParameter("task_short_text");
         String taskLongText = request.getParameter("task_long_text");
-
+        String priceType = request.getParameter("priceType");
         Task task = this.getRequestedTask(request);
 
+        
+        
         if (taskCategory != null && !taskCategory.trim().isEmpty()) {
             try {
                 task.setCategory(this.categoryBean.findById(Long.parseLong(taskCategory)));
@@ -128,20 +130,8 @@ public class TaskEditServlet extends HttpServlet {
             }
         }
 
-        Date CreatedOnDate = WebUtils.parseDate(taskCreatedOnDate);
-        Time CreatedOnTime = WebUtils.parseTime(taskCreatedOnTime);
-
-        if (CreatedOnDate != null) {
-            task.setCreatedOnDate(CreatedOnDate);
-        } else {
-            errors.add("Das Datum muss dem Format dd.mm.yyyy entsprechen.");
-        }
-
-        if (CreatedOnTime != null) {
-            task.setCreatedOnTime(CreatedOnTime);
-        } else {
-            errors.add("Die Uhrzeit muss dem Format hh:mm:ss entsprechen.");
-        }
+task.setcreatedOnDate(new Date(System.currentTimeMillis()));
+task.setcreatedOnTime(new Time(System.currentTimeMillis()));
 
         try {
             task.setType(AdvertType.valueOf(taskStatus));
@@ -149,6 +139,7 @@ public class TaskEditServlet extends HttpServlet {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }
 
+       
         task.setShortText(taskShortText);
         task.setLongText(taskLongText);
 
@@ -207,8 +198,8 @@ public class TaskEditServlet extends HttpServlet {
         // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
         Task task = new Task();
         task.setOwner(this.userBean.getCurrentUser());
-        task.setCreatedOnDate(new Date(System.currentTimeMillis()));
-        task.setCreatedOnTime(new Time(System.currentTimeMillis()));
+        task.setcreatedOnDate(new Date(System.currentTimeMillis()));
+        task.setcreatedOnTime(new Time(System.currentTimeMillis()));
 
         // ID aus der URL herausschneiden
         String taskId = request.getPathInfo();
@@ -257,17 +248,17 @@ public class TaskEditServlet extends HttpServlet {
         }
 
         values.put("task_due_date", new String[]{
-            WebUtils.formatDate(task.getCreatedOnDate())
+            WebUtils.formatDate(task.getcreatedOnDate())
         });
 
         values.put("task_due_time", new String[]{
-            WebUtils.formatTime(task.getCreatedOnTime())
+            WebUtils.formatTime(task.getcreatedOnTime())
         });
 
-        values.put("task_status", new String[]{
+  /*      values.put("task_status", new String[]{
             task.getType().toString()
         });
-
+*/
         values.put("task_short_text", new String[]{
             task.getShortText()
         });
@@ -275,7 +266,33 @@ public class TaskEditServlet extends HttpServlet {
         values.put("task_long_text", new String[]{
             task.getLongText()
         });
+        /*
+               ${task_form.values["name"][0]}
+                 ${task_form.values["address"][0]}
+                  ${task_form.values["ort"][0]}
+                   ${task_form.values["telefon"][0]}
+                    ${task_form.values["email"][0]}
+        */
+        
+        values.put("name", new String[]{
+        task.getOwner().getName()
+        });
+        
+              values.put("address", new String[]{
+        task.getOwner().getAnschrift()
+        });
 
+                    values.put("ort", new String[]{
+        task.getOwner().getOrt()
+        });
+           
+                          values.put("telefon", new String[]{
+        task.getOwner().getTel()
+        });
+                    
+                                values.put("email", new String[]{
+        task.getOwner().getEmail()
+        });
         FormValues formValues = new FormValues();
         formValues.setValues(values);
         return formValues;

@@ -17,10 +17,10 @@
     <jsp:attribute name="title">
         <c:choose>
             <c:when test="${edit}">
-                Anzeige bearbeiten
+                Angebot anzeigen
             </c:when>
             <c:otherwise>
-                Anzeige anlegen
+                Angebot anlegen
             </c:otherwise>
         </c:choose>
     </jsp:attribute>
@@ -42,12 +42,8 @@
                 <input type="hidden" name="csrf_token" value="${csrf_token}">
 
                 <%-- Eingabefelder --%>
-                <label for="task_owner">Eigentümer:</label>
-                <div class="side-by-side">
-                    <input type="text" name="task_owner" value="${task_form.values["task_owner"][0]}" readonly="readonly">
-                </div>
-
-                <label for="task_category">Kategorie:</label>
+                
+                      <label for="task_category">Kategorie:</label>
                 <div class="side-by-side">
                     <select name="task_category">
                         <option value="">Keine Kategorie</option>
@@ -59,18 +55,11 @@
                         </c:forEach>
                     </select>
                 </div>
-
-                <label for="task_due_date">
-                    Fällig am:
-                    <span class="required">*</span>
-                </label>
-                <div class="side-by-side">
-                    <input type="text" name="task_due_date" value="${task_form.values["task_due_date"][0]}">
-                    <input type="text" name="task_due_time" value="${task_form.values["task_due_time"][0]}">
-                </div>
-
-                <label for="task_status">
-                    Status:
+                
+                      
+                      
+                       <label for="task_status">
+                    Art des Angebots:
                     <span class="required">*</span>
                 </label>
                 <div class="side-by-side margin">
@@ -82,7 +71,7 @@
                         </c:forEach>
                     </select>
                 </div>
-
+                
                 <label for="task_short_text">
                     Bezeichnung:
                     <span class="required">*</span>
@@ -90,12 +79,50 @@
                 <div class="side-by-side">
                     <input type="text" name="task_short_text" value="${task_form.values["task_short_text"][0]}">
                 </div>
-
-                <label for="task_long_text">
+      
+                      
+                            <label for="task_long_text">
                     Beschreibung:
                 </label>
                 <div class="side-by-side">
                     <textarea name="task_long_text"><c:out value="${task_form.values['task_long_text'][0]}"/></textarea>
+                </div>  
+                      
+                      
+                <label for="task_price">
+                    Preis:
+              
+                </label>
+                <div class="side-by-side">
+                         <select name="priceType">
+                        <c:forEach items="${priceType}" var="price">
+                            <option value="${price}" ${task_form.values["priceType"][0] == price ? 'selected' : ''}>
+                                <c:out value="${price.label}"/>
+                            </option>
+                        </c:forEach>
+                            
+                         </select>
+                    
+                    <input type="text" name="price_field" value="${task_form_values["price_field"][0]}">
+                </div>
+                         
+                <label for="lblAngelegt">
+                Angelegt Am: 
+                </label>
+                <div class="side-by-side">
+                ${task_form.values["task_due_date"][0]}
+                ${task_form.values["task_due_time"][0]}
+                </div>
+                
+                       <label for="lblAngelegt">
+                Anbieter: 
+                </label>
+                <div class="side-by-side">
+                    ${task_form.values["name"][0]} <br>
+                 ${task_form.values["address"][0]} <br>
+                  ${task_form.values["ort"][0]} <br>
+                   ${task_form.values["telefon"][0]}<br>
+                    ${task_form.values["email"][0]}<br>
                 </div>
 
                 <%-- Button zum Abschicken --%>
