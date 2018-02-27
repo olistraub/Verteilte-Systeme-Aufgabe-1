@@ -10,8 +10,8 @@
 package dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb;
 
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Category;
-import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Task;
-import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.TaskStatus;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Advert;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.AdvertType;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -24,10 +24,10 @@ import javax.persistence.criteria.Root;
  */
 @Stateless
 @RolesAllowed("AufgabeVerteilteSysteme-app-user")
-public class TaskBean extends EntityBean<Task, Long> { 
+public class TaskBean extends EntityBean<Advert, Long> { 
    
     public TaskBean() {
-        super(Task.class);
+        super(Advert.class);
     }
     
     /**
@@ -35,7 +35,7 @@ public class TaskBean extends EntityBean<Task, Long> {
      * @param username Benutzername
      * @return Alle Aufgaben des Benutzers
      */
-    public List<Task> findByUsername(String username) {
+    public List<Advert> findByUsername(String username) {
         return em.createQuery("SELECT t FROM Task t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
                  .setParameter("username", username)
                  .getResultList();
@@ -52,13 +52,13 @@ public class TaskBean extends EntityBean<Task, Long> {
      * @param status Status (optional)
      * @return Liste mit den gefundenen Aufgaben
      */
-    public List<Task> search(String search, Category category, TaskStatus status) {
+    public List<Advert> search(String search, Category category, AdvertType status) {
         // Hilfsobjekt zum Bauen des Query
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         
         // SELECT t FROM Task t
-        CriteriaQuery<Task> query = cb.createQuery(Task.class);
-        Root<Task> from = query.from(Task.class);
+        CriteriaQuery<Advert> query = cb.createQuery(Advert.class);
+        Root<Advert> from = query.from(Advert.class);
         query.select(from);
 
         // ORDER BY dueDate, dueTime

@@ -12,8 +12,8 @@ package dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.web;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.CategoryBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Category;
-import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Task;
-import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.TaskStatus;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Advert;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.AdvertType;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -42,7 +42,7 @@ public class TaskListServlet extends HttpServlet {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
         request.setAttribute("categories", this.categoryBean.findAllSorted());
-        request.setAttribute("statuses", TaskStatus.values());
+        request.setAttribute("statuses", AdvertType.values());
 
         // Suchparameter aus der URL auslesen
         String searchText = request.getParameter("search_text");
@@ -51,7 +51,7 @@ public class TaskListServlet extends HttpServlet {
 
         // Anzuzeigende Aufgaben suchen
         Category category = null;
-        TaskStatus status = null;
+        AdvertType status = null;
 
         if (searchCategory != null) {
             try {
@@ -63,14 +63,14 @@ public class TaskListServlet extends HttpServlet {
 
         if (searchStatus != null) {
             try {
-                status = TaskStatus.valueOf(searchStatus);
+                status = AdvertType.valueOf(searchStatus);
             } catch (IllegalArgumentException ex) {
                 status = null;
             }
 
         }
 
-        List<Task> tasks = this.taskBean.search(searchText, category, status);
+        List<Advert> tasks = this.taskBean.search(searchText, category, status);
         request.setAttribute("tasks", tasks);
 
         // Anfrage an die JSP weiterleiten
