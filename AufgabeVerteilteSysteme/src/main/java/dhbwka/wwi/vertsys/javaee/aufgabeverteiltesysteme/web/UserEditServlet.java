@@ -70,10 +70,11 @@ public class UserEditServlet extends HttpServlet {
         String email = request.getParameter("signup_email");
         
         User currUser = userBean.getCurrentUser();
-        User newUser = new User(currUser.getUsername(),currUser.getHashPassword(),  name,  anschrift,  plz,  ort,  tel,  email);
+        String oldpwd = currUser.getPassword().password;
+        User newUser = new User(currUser.getUsername(), oldpwd, name, anschrift, plz, ort, tel, email);
         userBean.update(newUser);
        
-         response.sendRedirect(WebUtils.appUrl(request, "/app/tasks/"));
+        response.sendRedirect(WebUtils.appUrl(request, "/app/tasks/"));
         
     }
 
