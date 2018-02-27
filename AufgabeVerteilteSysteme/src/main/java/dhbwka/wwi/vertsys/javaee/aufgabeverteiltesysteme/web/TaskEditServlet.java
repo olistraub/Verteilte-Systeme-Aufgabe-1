@@ -71,10 +71,10 @@ public class TaskEditServlet extends HttpServlet {
         request.setAttribute("readonly", readonly);
         request.setAttribute("edit", task.getId() != 0);
                                 
-        if (session.getAttribute("task_form") == null) {
+        if (session.getAttribute("task_form_values") == null) {
             // Keine Formulardaten mit fehlerhaften Daten in der Session,
             // daher Formulardaten aus dem Datenbankobjekt übernehmen
-            request.setAttribute("task_form", this.createTaskForm(task));
+            request.setAttribute("task_form_values", this.GetEasyList(task));
         }
 
         // Anfrage an die JSP weiterleiten
@@ -83,6 +83,42 @@ public class TaskEditServlet extends HttpServlet {
         session.removeAttribute("task_form");
     }
 
+    private List<String> GetEasyList(Task task){
+        List<String> list = new ArrayList<>();
+        
+     
+            list.add(task.getOwner().getUsername()); // 0
+            
+            if(task.getCategory() != null)
+           list.add(task.getCategory().getName()); // 1
+            else 
+                list.add("");
+            
+           list.add( WebUtils.formatDate(task.getcreatedOnDate())); // 2
+            list.add(WebUtils.formatTime(task.getcreatedOnTime())); // 3
+            list.add(task.getShortText()); // 4
+           list.add( task.getLongText()); // 5
+        list.add(task.getOwner().getName()); // 6
+        list.add(task.getOwner().getAnschrift()); // 7
+       list.add( task.getOwner().getOrt()); // 8
+        list.add(task.getOwner().getTel()); // 9
+        list.add(task.getOwner().getEmail()); // 10
+        
+
+       list.add( Double.toString(task.getPrice())); // 11
+       
+       if(task.getType() != null)
+     list.add(task.getType().toString());// 12
+           else 
+                list.add("");
+       
+       if(task.getPriceType() != null)
+     list.add(task.getPriceType().toString()); // 13
+           else 
+                list.add("");
+        return list;
+    }
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -323,6 +359,7 @@ task.setcreatedOnTime(new Time(System.currentTimeMillis()));
                                  
         FormValues formValues = new FormValues();
         formValues.setValues(values);
+    
         return formValues;
     }
 

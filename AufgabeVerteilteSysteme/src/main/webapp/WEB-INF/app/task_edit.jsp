@@ -49,7 +49,7 @@
                         <option value="">Keine Kategorie</option>
 
                         <c:forEach items="${categories}" var="category">
-                            <option value="${category.id}" ${task_form.values["task_category"][0] == category.id ? 'selected' : ''}>
+                            <option value="${category.id}" ${task_form_values[1] == category.name ? 'selected' : ''}>
                                 <c:out value="${category.name}" />
                             </option>
                         </c:forEach>
@@ -65,7 +65,7 @@
                 <div class="side-by-side margin">
                     <select name="task_status" ${readonly ? 'disabled="readonly"' : ''}>
                         <c:forEach items="${statuses}" var="status">
-                            <option value="${status}" ${task_form.values["task_status"][0] == status ? 'selected' : ''}>
+                            <option value="${status}" ${task_form_values[12] == status ? 'selected' : ''}>
                                 <c:out value="${status.label}"/>
                             </option>
                         </c:forEach>
@@ -77,7 +77,7 @@
                     <span class="required">*</span>
                 </label>
                 <div class="side-by-side">
-                    <input type="text" name="task_short_text" value="${task_form.values["task_short_text"][0]}" ${readonly ? 'readonly="readonly"' : ''}>
+                    <input type="text" name="task_short_text" value="${task_form_values[4]}" ${readonly ? 'readonly="readonly"' : ''}>
                 </div>
       
                       
@@ -85,7 +85,7 @@
                     Beschreibung:
                 </label>
                 <div class="side-by-side">
-                    <textarea name="task_long_text" ${readonly ? 'readonly="readonly"' : ''}><c:out value="${task_form.values['task_long_text'][0]}"/></textarea>
+                    <textarea name="task_long_text" ${readonly ? 'readonly="readonly"' : ''}><c:out value="${task_form_values[5]}"/></textarea>
                 </div>  
                       
                       
@@ -96,33 +96,33 @@
                 <div class="side-by-side">
                          <select name="priceType" ${readonly ? 'disabled="readonly"' : ''}>
                         <c:forEach items="${priceType}" var="price">
-                            <option value="${price}" ${task_form.values["priceType"][0] == price ? 'selected' : ''}>
+                            <option value="${price}" ${task_form_values[13] == price ? 'selected' : ''}>
                                 <c:out value="${price.label}"/>
                             </option>
                         </c:forEach>
                             
                          </select>
                     
-                    <input type="text" name="price_field" value="${task_form_values["price_field"][0]}" ${readonly ? 'readonly="readonly"' : ''}>
+                    <input type="text" name="price_field" value="${task_form_values[11]}" ${readonly ? 'readonly="readonly"' : ''}>
                 </div>
                          
                 <label for="lblAngelegt">
                 Angelegt Am: 
                 </label>
                 <div class="side-by-side">
-                ${task_form.values["task_due_date"][0]}
-                ${task_form.values["task_due_time"][0]}
+                ${task_form_values[2]}
+                ${task_form_values[3]}
                 </div>
                 
                        <label for="lblAngelegt">
                 Anbieter: 
                 </label>
                 <div class="side-by-side">
-                    ${task_form.values["name"][0]} <br>
-                 ${task_form.values["address"][0]} <br>
-                  ${task_form.values["ort"][0]} <br>
-                   ${task_form.values["telefon"][0]}<br>
-                    ${task_form.values["email"][0]}<br>
+                    ${task_form_values[6]} <br>
+                 ${task_form_values[7]} <br>
+                  ${task_form_values[8]} <br>
+                   ${task_form_values[9]}<br>
+                    ${task_form_values[10]}<br>
                 </div>
         <c:if test="${readonly == false}">
       
