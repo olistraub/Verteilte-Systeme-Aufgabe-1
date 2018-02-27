@@ -71,6 +71,7 @@ public class TaskListServlet extends HttpServlet {
         }
 
         List<Task> tasks = this.taskBean.search(searchText, category, status);
+        
         request.setAttribute("tasks", tasks);
 
         // Anfrage an die JSP weiterleiten

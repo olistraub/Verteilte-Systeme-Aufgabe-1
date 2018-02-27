@@ -76,7 +76,8 @@ public class TaskBean extends EntityBean<Task, Long> {
         
         // WHERE t.status = :status
         if (status != null) {
-            query.where(cb.equal(from.get("status"), status));
+            //query.where(cb.equal(from.get("status"), status));
+            query.where(cb.equal(from.get("type"), status));
         }
         
         return em.createQuery(query).getResultList();
