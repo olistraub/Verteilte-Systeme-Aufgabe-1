@@ -12,7 +12,7 @@ package dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.web;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.CategoryBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Category;
-import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Advert;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Task;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.AdvertType;
 import java.io.IOException;
 import java.util.List;
@@ -70,7 +70,7 @@ public class TaskListServlet extends HttpServlet {
 
         }
 
-        List<Advert> tasks = this.taskBean.search(searchText, category, status);
+        List<Task> tasks = this.taskBean.search(searchText, category, status);
         request.setAttribute("tasks", tasks);
 
         // Anfrage an die JSP weiterleiten

@@ -99,8 +99,8 @@
                                 <c:out value="${task.status.label}"/>
                             </td>
                             <td>
-                                <c:out value="${utils.formatDate(task.dueDate)}"/>
-                                <c:out value="${utils.formatTime(task.dueTime)}"/>
+                                <c:out value="${utils.formatDate(task.CreatedOnDate)}"/>
+                                <c:out value="${utils.formatTime(task.CreatedOnTime)}"/>
                             </td>
                         </tr>
                     </c:forEach>

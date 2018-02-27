@@ -28,7 +28,7 @@ import javax.validation.constraints.Size;
  * Eine zu erledigende Aufgabe.
  */
 @Entity
-public class Advert implements Serializable {
+public class Task implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,9 +53,11 @@ public class Advert implements Serializable {
     @NotNull
     private String longText;
 
+    @Column(name = "CreatedOnDate")
     @NotNull(message = "Das Datum darf nicht leer sein.")
     private Date CreatedOnDate = new Date(System.currentTimeMillis());
 
+    @Column(name = "CreatedOnTime")
     @NotNull(message = "Die Uhrzeit darf nicht leer sein.")
     private Time CreatedOnTime = new Time(System.currentTimeMillis());
 
@@ -72,10 +74,10 @@ public class Advert implements Serializable {
     
     
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
-    public Advert() {
+    public Task() {
     }
 
-    public Advert(User owner, Category category, String shortText, String longText, PriceType priceType, AdvertType type, double price) {
+    public Task(User owner, Category category, String shortText, String longText, PriceType priceType, AdvertType type, double price) {
         this.owner = owner;
         this.category = category;
         this.shortText = shortText;
@@ -171,21 +173,6 @@ public class Advert implements Serializable {
         this.longText = longText;
     }
 
-    public Date getDueDate() {
-        return CreatedOnDate;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.CreatedOnDate = dueDate;
-    }
-
-    public Time getDueTime() {
-        return CreatedOnTime;
-    }
-
-    public void setDueTime(Time dueTime) {
-        this.CreatedOnTime = dueTime;
-    }
 
     public AdvertType getStatus() {
         return type;

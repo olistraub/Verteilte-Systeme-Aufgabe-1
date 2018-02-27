@@ -13,7 +13,7 @@ import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.CategoryBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.ValidationBean;
-import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Advert;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Task;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.AdvertType;
 import java.io.IOException;
 import java.sql.Date;
@@ -59,7 +59,7 @@ public class TaskEditServlet extends HttpServlet {
         // Zu bearbeitende Aufgabe einlesen
         HttpSession session = request.getSession();
 
-        Advert task = this.getRequestedTask(request);
+        Task task = this.getRequestedTask(request);
         request.setAttribute("edit", task.getId() != 0);
                                 
         if (session.getAttribute("task_form") == null) {
@@ -112,13 +112,13 @@ public class TaskEditServlet extends HttpServlet {
         List<String> errors = new ArrayList<>();
 
         String taskCategory = request.getParameter("task_category");
-        String taskDueDate = request.getParameter("task_due_date");
-        String taskDueTime = request.getParameter("task_due_time");
+        String taskCreatedOnDate = request.getParameter("task_due_date");
+        String taskCreatedOnTime = request.getParameter("task_due_time");
         String taskStatus = request.getParameter("task_status");
         String taskShortText = request.getParameter("task_short_text");
         String taskLongText = request.getParameter("task_long_text");
 
-        Advert task = this.getRequestedTask(request);
+        Task task = this.getRequestedTask(request);
 
         if (taskCategory != null && !taskCategory.trim().isEmpty()) {
             try {
@@ -128,17 +128,17 @@ public class TaskEditServlet extends HttpServlet {
             }
         }
 
-        Date dueDate = WebUtils.parseDate(taskDueDate);
-        Time dueTime = WebUtils.parseTime(taskDueTime);
+        Date CreatedOnDate = WebUtils.parseDate(taskCreatedOnDate);
+        Time CreatedOnTime = WebUtils.parseTime(taskCreatedOnTime);
 
-        if (dueDate != null) {
-            task.setDueDate(dueDate);
+        if (CreatedOnDate != null) {
+            task.setCreatedOnDate(CreatedOnDate);
         } else {
             errors.add("Das Datum muss dem Format dd.mm.yyyy entsprechen.");
         }
 
-        if (dueTime != null) {
-            task.setDueTime(dueTime);
+        if (CreatedOnTime != null) {
+            task.setCreatedOnTime(CreatedOnTime);
         } else {
             errors.add("Die Uhrzeit muss dem Format hh:mm:ss entsprechen.");
         }
@@ -188,7 +188,7 @@ public class TaskEditServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Datensatz löschen
-        Advert task = this.getRequestedTask(request);
+        Task task = this.getRequestedTask(request);
         this.taskBean.delete(task);
 
         // Zurück zur Übersicht
@@ -203,12 +203,12 @@ public class TaskEditServlet extends HttpServlet {
      * @param request HTTP-Anfrage
      * @return Zu bearbeitende Aufgabe
      */
-    private Advert getRequestedTask(HttpServletRequest request) {
+    private Task getRequestedTask(HttpServletRequest request) {
         // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
-        Advert task = new Advert();
+        Task task = new Task();
         task.setOwner(this.userBean.getCurrentUser());
-        task.setDueDate(new Date(System.currentTimeMillis()));
-        task.setDueTime(new Time(System.currentTimeMillis()));
+        task.setCreatedOnDate(new Date(System.currentTimeMillis()));
+        task.setCreatedOnTime(new Time(System.currentTimeMillis()));
 
         // ID aus der URL herausschneiden
         String taskId = request.getPathInfo();
@@ -243,7 +243,7 @@ public class TaskEditServlet extends HttpServlet {
      * @param task Die zu bearbeitende Aufgabe
      * @return Neues, gefülltes FormValues-Objekt
      */
-    private FormValues createTaskForm(Advert task) {
+    private FormValues createTaskForm(Task task) {
         Map<String, String[]> values = new HashMap<>();
 
         values.put("task_owner", new String[]{
@@ -257,11 +257,11 @@ public class TaskEditServlet extends HttpServlet {
         }
 
         values.put("task_due_date", new String[]{
-            WebUtils.formatDate(task.getDueDate())
+            WebUtils.formatDate(task.getCreatedOnDate())
         });
 
         values.put("task_due_time", new String[]{
-            WebUtils.formatTime(task.getDueTime())
+            WebUtils.formatTime(task.getCreatedOnTime())
         });
 
         values.put("task_status", new String[]{

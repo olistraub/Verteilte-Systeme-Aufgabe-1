@@ -10,7 +10,7 @@
 package dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb;
 
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Category;
-import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Advert;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Task;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.AdvertType;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
@@ -24,10 +24,10 @@ import javax.persistence.criteria.Root;
  */
 @Stateless
 @RolesAllowed("AufgabeVerteilteSysteme-app-user")
-public class TaskBean extends EntityBean<Advert, Long> { 
+public class TaskBean extends EntityBean<Task, Long> { 
    
     public TaskBean() {
-        super(Advert.class);
+        super(Task.class);
     }
     
     /**
@@ -35,8 +35,8 @@ public class TaskBean extends EntityBean<Advert, Long> {
      * @param username Benutzername
      * @return Alle Aufgaben des Benutzers
      */
-    public List<Advert> findByUsername(String username) {
-        return em.createQuery("SELECT t FROM Task t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
+    public List<Task> findByUsername(String username) {
+        return em.createQuery("SELECT t FROM Task t WHERE t.owner.username = :username ORDER BY t.CreatedOnDate, t.CreatedOnTime")
                  .setParameter("username", username)
                  .getResultList();
     }
@@ -52,17 +52,17 @@ public class TaskBean extends EntityBean<Advert, Long> {
      * @param status Status (optional)
      * @return Liste mit den gefundenen Aufgaben
      */
-    public List<Advert> search(String search, Category category, AdvertType status) {
+    public List<Task> search(String search, Category category, AdvertType status) {
         // Hilfsobjekt zum Bauen des Query
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         
         // SELECT t FROM Task t
-        CriteriaQuery<Advert> query = cb.createQuery(Advert.class);
-        Root<Advert> from = query.from(Advert.class);
+        CriteriaQuery<Task> query = cb.createQuery(Task.class);
+        Root<Task> from = query.from(Task.class);
         query.select(from);
 
-        // ORDER BY dueDate, dueTime
-        query.orderBy(cb.asc(from.get("dueDate")), cb.asc(from.get("dueTime")));
+        // ORDER BY CreatedOnDate, CreatedOnTime
+        query.orderBy(cb.asc(from.get("CreatedOnDate")), cb.asc(from.get("CreatedOnTime")));
         
         // WHERE t.shortText LIKE :search
         if (search != null && !search.trim().isEmpty()) {

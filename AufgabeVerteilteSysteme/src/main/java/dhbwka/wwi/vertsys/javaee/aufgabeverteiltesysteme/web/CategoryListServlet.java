@@ -13,7 +13,7 @@ import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.CategoryBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Category;
-import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Advert;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.Task;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -150,7 +150,7 @@ public class CategoryListServlet extends HttpServlet {
             }
             
             // Bei allen betroffenen Aufgaben, den Bezug zur Kategorie aufheben
-            category.getTasks().forEach((Advert task) -> {
+            category.getTasks().forEach((Task task) -> {
                 task.setCategory(null);
                 this.taskBean.update(task);
             });
