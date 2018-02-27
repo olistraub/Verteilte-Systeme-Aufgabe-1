@@ -174,13 +174,6 @@ public class Task implements Serializable {
     }
 
 
-    public AdvertType getStatus() {
-        return type;
-    }
-
-    public void setStatus(AdvertType type) {
-        this.type = type;
-    }
     //</editor-fold>
 
 }

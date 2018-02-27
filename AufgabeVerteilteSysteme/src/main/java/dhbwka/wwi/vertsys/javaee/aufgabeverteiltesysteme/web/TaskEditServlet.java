@@ -144,7 +144,7 @@ public class TaskEditServlet extends HttpServlet {
         }
 
         try {
-            task.setStatus(AdvertType.valueOf(taskStatus));
+            task.setType(AdvertType.valueOf(taskStatus));
         } catch (IllegalArgumentException ex) {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }
@@ -265,7 +265,7 @@ public class TaskEditServlet extends HttpServlet {
         });
 
         values.put("task_status", new String[]{
-            task.getStatus().toString()
+            task.getType().toString()
         });
 
         values.put("task_short_text", new String[]{
