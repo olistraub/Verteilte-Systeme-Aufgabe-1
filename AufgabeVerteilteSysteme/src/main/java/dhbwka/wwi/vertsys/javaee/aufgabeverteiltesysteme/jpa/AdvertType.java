@@ -12,8 +12,8 @@ package dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa;
 /**
  * Statuswerte einer Aufgabe.
  */
-public enum TaskStatus {
-    OPEN, IN_PROGRESS, FINISHED, CANCELED, POSTPONED;
+public enum AdvertType {
+    OFFER, SEARCH;
 
     /**
      * Bezeichnung ermitteln
@@ -22,16 +22,10 @@ public enum TaskStatus {
      */
     public String getLabel() {
         switch (this) {
-            case OPEN:
-                return "Offen";
-            case IN_PROGRESS:
-                return "In Bearbeitung";
-            case FINISHED:
-                return "Erledigt";
-            case CANCELED:
-                return "Abgesagt";
-            case POSTPONED:
-                return "Zurückgestellt";
+            case OFFER:
+                return "Biete";
+            case SEARCH:
+                return "Suche";
             default:
                 return this.toString();
         }

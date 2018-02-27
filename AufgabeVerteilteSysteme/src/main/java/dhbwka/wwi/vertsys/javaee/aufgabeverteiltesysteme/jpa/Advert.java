@@ -54,30 +54,83 @@ public class Advert implements Serializable {
     private String longText;
 
     @NotNull(message = "Das Datum darf nicht leer sein.")
-    private Date dueDate;
+    private Date CreatedOnDate = new Date(System.currentTimeMillis());
 
     @NotNull(message = "Die Uhrzeit darf nicht leer sein.")
-    private Time dueTime;
+    private Time CreatedOnTime = new Time(System.currentTimeMillis());
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private TaskStatus status = TaskStatus.OPEN;
+    private PriceType priceType;
+    
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private AdvertType type;
 
+    @NotNull(message = "Der Preis darf nicht leer sein")
+    private double price;
+    
+    
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Advert() {
     }
 
-    public Advert(User owner, Category category, String shortText, String longText, Date dueDate, Time dueTime) {
+    public Advert(User owner, Category category, String shortText, String longText, PriceType priceType, AdvertType type, double price) {
         this.owner = owner;
         this.category = category;
         this.shortText = shortText;
         this.longText = longText;
-        this.dueDate = dueDate;
-        this.dueTime = dueTime;
+        this.priceType = priceType;
+        this.type = type;
+        this.price = price;
     }
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Setter und Getter">
+
+    public Date getCreatedOnDate() {
+        return CreatedOnDate;
+    }
+
+    public void setCreatedOnDate(Date CreatedOnDate) {
+        this.CreatedOnDate = CreatedOnDate;
+    }
+
+    public Time getCreatedOnTime() {
+        return CreatedOnTime;
+    }
+
+    public void setCreatedOnTime(Time CreatedOnTime) {
+        this.CreatedOnTime = CreatedOnTime;
+    }
+
+    public PriceType getPriceType() {
+        return priceType;
+    }
+
+    public void setPriceType(PriceType priceType) {
+        this.priceType = priceType;
+    }
+
+    public AdvertType getType() {
+        return type;
+    }
+
+    public void setType(AdvertType type) {
+        this.type = type;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    
+    
     public long getId() {
         return id;
     }
@@ -119,27 +172,27 @@ public class Advert implements Serializable {
     }
 
     public Date getDueDate() {
-        return dueDate;
+        return CreatedOnDate;
     }
 
     public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+        this.CreatedOnDate = dueDate;
     }
 
     public Time getDueTime() {
-        return dueTime;
+        return CreatedOnTime;
     }
 
     public void setDueTime(Time dueTime) {
-        this.dueTime = dueTime;
+        this.CreatedOnTime = dueTime;
     }
 
-    public TaskStatus getStatus() {
-        return status;
+    public AdvertType getStatus() {
+        return type;
     }
 
-    public void setStatus(TaskStatus status) {
-        this.status = status;
+    public void setStatus(AdvertType type) {
+        this.type = type;
     }
     //</editor-fold>
 
