@@ -68,12 +68,12 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Task> tasks = new ArrayList<>();
     
-    @Column(name = "Vor- und Nachname")
+    @Column(name = "VorundNachname")
     @NotNull(message = "Der Name darf nicht leer sein.")
     private String name;
     
-    @Column(name = "Straße und Hausnummer")
-    @NotNull(message = "Die Straße und Hausnummer darf nicht leer sein.")
+    @Column(name = "Strasse_und_Hausnummer")
+    @NotNull(message = "Die Strasse und Hausnummer darf nicht leer sein.")
     private String anschrift;
     
     @Column(name = "Postleitzahl")
@@ -100,14 +100,18 @@ public class User implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public User() {
     }
-
-    public User(String username, String password) {
+    public User(String username, String password, String name, String anschrift, String plz, String ort, String tel, String email) {
         this.username = username;
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
+        this.name = name;
+        this.anschrift = anschrift;
+        this.plz = plz;
+        this.ort = ort;
+        this.tel = tel;
+        this.email = email;
     }
     //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="Setter und Getter">
     public String getUsername() {
         return username;
