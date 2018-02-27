@@ -68,12 +68,12 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Task> tasks = new ArrayList<>();
     
-    @Column(name = "Vor- und Nachname")
+    @Column(name = "VorundNachname")
     @NotNull(message = "Der Name darf nicht leer sein.")
     private String name;
     
-    @Column(name = "Straße und Hausnummer")
-    @NotNull(message = "Die Straße und Hausnummer darf nicht leer sein.")
+    @Column(name = "Strasse_und_Hausnummer")
+    @NotNull(message = "Die Strasse und Hausnummer darf nicht leer sein.")
     private String anschrift;
     
     @Column(name = "Postleitzahl")
