@@ -28,6 +28,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -66,7 +67,36 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Task> tasks = new ArrayList<>();
-
+    
+    @Column(name = "Vor- und Nachname")
+    @NotNull(message = "Der Name darf nicht leer sein.")
+    private String name;
+    
+    @Column(name = "Straße und Hausnummer")
+    @NotNull(message = "Die Straße und Hausnummer darf nicht leer sein.")
+    private String anschrift;
+    
+    @Column(name = "Postleitzahl")
+    @NotNull(message = "Die PLZ darf nicht leer sein.")
+    @Size(min = 5, max = 64, message = "Die PLZ muss fünf Zeichen lang sein.")
+    private String plz;
+    
+    @Column(name = "Ort")
+    @NotNull(message = "Der Ort darf nicht leer sein.")
+    private String ort;
+    
+    @Column(name = "Telefonnummer")
+    @NotNull(message = "Die Telefonnummer darf nicht leer sein.")
+    private String tel;
+    
+    @Column(name = "Email")
+    @NotNull(message = "Die Email-Adresse darf nicht leer sein.")
+    @Pattern(regexp = "^\\w+@\\w+\\..{2,3}(.{2,3})?$")
+    private String email;
+    
+    
+    
+    
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public User() {
     }
@@ -94,6 +124,56 @@ public class User implements Serializable {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAnschrift() {
+        return anschrift;
+    }
+
+    public String getPlz() {
+        return plz;
+    }
+
+    public String getOrt() {
+        return ort;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAnschrift(String anschrift) {
+        this.anschrift = anschrift;
+    }
+
+    public void setPlz(String plz) {
+        this.plz = plz;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Passwort setzen und prüfen">

@@ -88,6 +88,7 @@ public class UserBean {
     public User update(User user) {
         return em.merge(user);
     }
+    
 
     /**
      * Fehler: Der Benutzername ist bereits vergeben
