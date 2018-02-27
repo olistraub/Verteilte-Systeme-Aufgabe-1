@@ -100,14 +100,18 @@ public class User implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public User() {
     }
-
-    public User(String username, String password) {
+    public User(String username, String password, String name, String anschrift, String plz, String ort, String tel, String email) {
         this.username = username;
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
+        this.name = name;
+        this.anschrift = anschrift;
+        this.plz = plz;
+        this.ort = ort;
+        this.tel = tel;
+        this.email = email;
     }
     //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="Setter und Getter">
     public String getUsername() {
         return username;
