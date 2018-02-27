@@ -111,6 +111,16 @@ public class User implements Serializable {
         this.tel = tel;
         this.email = email;
     }
+    
+    public User(String username , String name, String anschrift, String plz, String ort, String tel, String email) {
+        this.username = username;
+        this.name = name;
+        this.anschrift = anschrift;
+        this.plz = plz;
+        this.ort = ort;
+        this.tel = tel;
+        this.email = email;
+    }
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Setter und Getter">
     public String getUsername() {
@@ -216,6 +226,15 @@ public class User implements Serializable {
      *
      * @param password Neues Passwort
      */
+    
+    public void setHashPassword(String password){
+        passwordHash = password;
+    }
+
+    public String getHashPassword(){
+        return passwordHash;
+    }
+    
     public void setPassword(String password) {
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
