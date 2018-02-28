@@ -71,52 +71,16 @@ public class TaskEditServlet extends HttpServlet {
         request.setAttribute("readonly", readonly);
         request.setAttribute("edit", task.getId() != 0);
                                 
-        if (session.getAttribute("task_form_values") == null) {
+        if (session.getAttribute("task_form") == null) {
             // Keine Formulardaten mit fehlerhaften Daten in der Session,
             // daher Formulardaten aus dem Datenbankobjekt übernehmen
-            request.setAttribute("task_form_values", this.GetEasyList(task));
+            request.setAttribute("task_form", this.createTaskForm(task));
         }
 
         // Anfrage an die JSP weiterleiten
         request.getRequestDispatcher("/WEB-INF/app/task_edit.jsp").forward(request, response);
 
         session.removeAttribute("task_form");
-    }
-
-    private List<String> GetEasyList(Task task){
-        List<String> list = new ArrayList<>();
-        
-     
-            list.add(task.getOwner().getUsername()); // 0
-            
-            if(task.getCategory() != null)
-           list.add(task.getCategory().getName()); // 1
-            else 
-                list.add("");
-            
-           list.add( WebUtils.formatDate(task.getcreatedOnDate())); // 2
-            list.add(WebUtils.formatTime(task.getcreatedOnTime())); // 3
-            list.add(task.getShortText()); // 4
-           list.add( task.getLongText()); // 5
-        list.add(task.getOwner().getName()); // 6
-        list.add(task.getOwner().getAnschrift()); // 7
-       list.add( task.getOwner().getOrt()); // 8
-        list.add(task.getOwner().getTel()); // 9
-        list.add(task.getOwner().getEmail()); // 10
-        
-
-       list.add( Double.toString(task.getPrice())); // 11
-       
-       if(task.getType() != null)
-     list.add(task.getType().toString());// 12
-           else 
-                list.add("");
-       
-       if(task.getPriceType() != null)
-     list.add(task.getPriceType().toString()); // 13
-           else 
-                list.add("");
-        return list;
     }
     
     @Override
@@ -294,69 +258,58 @@ task.setcreatedOnTime(new Time(System.currentTimeMillis()));
     private FormValues createTaskForm(Task task) {
         Map<String, String[]> values = new HashMap<>();
 
-        values.put("task_owner", new String[]{
-            task.getOwner().getUsername()
+        values.put("owner_name", new String[]{
+            task.getOwner().getName()
         });
 
-        if (task.getCategory() != null) {
-            values.put("task_category", new String[]{
-                task.getCategory().toString()
-            });
-        }
-
-        values.put("task_due_date", new String[]{
+        values.put("date", new String[]{
             WebUtils.formatDate(task.getcreatedOnDate())
         });
-
-        values.put("task_due_time", new String[]{
+        
+        values.put("time", new String[]{
             WebUtils.formatTime(task.getcreatedOnTime())
         });
-
-  /*      values.put("task_status", new String[]{
-            task.getType().toString()
+        
+        values.put("short", new String[]{
+           task.getShortText()
         });
-*/
-        values.put("task_short_text", new String[]{
-            task.getShortText()
-        });
-
-        values.put("task_long_text", new String[]{
+                   
+        values.put("long", new String[]{
             task.getLongText()
         });
-        /*
-               ${task_form.values["name"][0]}
-                 ${task_form.values["address"][0]}
-                  ${task_form.values["ort"][0]}
-                   ${task_form.values["telefon"][0]}
-                    ${task_form.values["email"][0]}
-        */
-        
-        values.put("name", new String[]{
-        task.getOwner().getName()
+
+        values.put("anschrift", new String[]{
+            task.getOwner().getAnschrift()
         });
         
-              values.put("address", new String[]{
-        task.getOwner().getAnschrift()
+        values.put("ort", new String[]{
+            task.getOwner().getOrt()
+        });
+        
+        values.put("tel", new String[]{
+            task.getOwner().getTel()
+        });
+        
+        values.put("email", new String[]{
+            task.getOwner().getEmail()
         });
 
-                    values.put("ort", new String[]{
-        task.getOwner().getOrt()
+        values.put("price", new String[]{
+            Double.toString(task.getPrice())
         });
-           
-                          values.put("telefon", new String[]{
-        task.getOwner().getTel()
+             
+        values.put("category", new String[]{
+            task.getCategory() != null ? task.getCategory().getName() : ""
         });
-                    
-                                values.put("email", new String[]{
-        task.getOwner().getEmail()
+        
+        values.put("type", new String[]{
+            task.getType() != null ? task.getType().toString() : ""
         });
-                                
-                                 values.put("price_field", new String[]{
-                                     
-        Double.toString(task.getPrice())
-        }); 
-                                             
-                                 
+        
+        values.put("priceType", new String[]{
+            task.getPriceType() != null ? task.getPriceType().toString() : ""
+        });
+                                         
         FormValues formValues = new FormValues();
         formValues.setValues(values);
     
