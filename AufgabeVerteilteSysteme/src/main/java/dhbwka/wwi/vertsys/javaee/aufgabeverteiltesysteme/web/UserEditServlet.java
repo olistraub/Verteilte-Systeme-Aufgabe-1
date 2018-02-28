@@ -10,9 +10,12 @@
 package dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.web;
 
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.UserBean;
+import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.aufgabeverteiltesysteme.jpa.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,26 +34,31 @@ public class UserEditServlet extends HttpServlet {
     @EJB
     UserBean userBean;
     
+    @EJB 
+    ValidationBean validationBean;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-            HttpSession session = request.getSession();
-               
+         
             User user = userBean.getCurrentUser();
             
-            session.setAttribute("name", user.getName());
-            session.setAttribute("anschrift", user.getAnschrift());
-            session.setAttribute("plz", user.getPlz());
-            session.setAttribute("ort", user.getOrt());
-            session.setAttribute("telefon", user.getTel());
-            session.setAttribute("email", user.getEmail());
-            session.setAttribute("username", user.getUsername());
+            request.setAttribute("name", user.getName());
+            request.setAttribute("anschrift", user.getAnschrift());
+            request.setAttribute("plz", user.getPlz());
+            request.setAttribute("ort", user.getOrt());
+            request.setAttribute("telefon", user.getTel());
+            request.setAttribute("email", user.getEmail());
+            request.setAttribute("username", user.getUsername());
 
         
         
           request.getRequestDispatcher("/WEB-INF/app/user.jsp").forward(request, response);
+          
+          HttpSession session = request.getSession();
+          session.removeAttribute("errors");
+     
         
     }
 
@@ -73,10 +81,20 @@ public class UserEditServlet extends HttpServlet {
         String oldpwd = currUser.getHashPassword();
         User newUser = new User(username, name, anschrift, plz, ort, tel, email);
         newUser.setHashPassword(oldpwd);
+        
+        List<String> errors = validationBean.validate(newUser);
+        
+        if(!errors.isEmpty()){
+
+            HttpSession session = request.getSession();
+            session.setAttribute("errors", errors);
+            response.sendRedirect(request.getRequestURI());
+
+        }else{    
         userBean.update(newUser);
        
         response.sendRedirect(WebUtils.appUrl(request, "/app/tasks/"));
-        
+        }
     }
 
 

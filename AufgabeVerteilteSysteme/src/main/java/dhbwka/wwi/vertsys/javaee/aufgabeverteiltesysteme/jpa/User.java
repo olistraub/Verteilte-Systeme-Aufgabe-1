@@ -70,23 +70,27 @@ public class User implements Serializable {
     
     @Column(name = "VorundNachname")
     @NotNull(message = "Der Name darf nicht leer sein.")
+    @Size(min = 1, max = 255, message = "Der Name darf nicht leer sein.")
     private String name;
     
     @Column(name = "Strasse_und_Hausnummer")
     @NotNull(message = "Die Strasse und Hausnummer darf nicht leer sein.")
+    @Size(min = 1, max = 255, message = "Die Anschrift darf nicht leer sein.")
     private String anschrift;
     
     @Column(name = "Postleitzahl")
     @NotNull(message = "Die PLZ darf nicht leer sein.")
-    @Size(min = 5, max = 64, message = "Die PLZ muss fünf Zeichen lang sein.")
+    @Size(min = 5, max = 5, message = "Die PLZ muss fünf Zeichen lang sein.")
     private String plz;
     
     @Column(name = "Ort")
     @NotNull(message = "Der Ort darf nicht leer sein.")
+    @Size(min = 1, max = 255, message = "Der Ort darf nicht leer sein.")
     private String ort;
     
     @Column(name = "Telefonnummer")
     @NotNull(message = "Die Telefonnummer darf nicht leer sein.")
+    @Size(min = 1, max = 255, message = "Die Telefonnummer darf nicht leer sein.")
     private String tel;
     
     @Column(name = "Email")
