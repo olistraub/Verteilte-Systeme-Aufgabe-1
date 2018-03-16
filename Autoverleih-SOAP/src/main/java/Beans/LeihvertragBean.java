@@ -6,15 +6,17 @@
 package Beans;
 
 import Entity.Leihvertrag;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Raphael
  */
+@Stateless
 public class LeihvertragBean extends EntityBean<Leihvertrag, Long>{
-    
-    public LeihvertragBean(Class<Leihvertrag> entityClass) {
-        super(entityClass);
+
+    public LeihvertragBean() {
+        super(Leihvertrag.class);
     }
     
 }
