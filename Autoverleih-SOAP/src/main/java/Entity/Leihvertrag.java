@@ -22,10 +22,13 @@ import javax.persistence.TemporalType;
 public class Leihvertrag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Id;
+    private long id;
     
     @ManyToOne
-    private Kunde Kunde;
+    private Kunde kunde;
+    
+    @ManyToOne
+    private Fahrzeug fahrzeug;
     
     @Temporal(TemporalType.DATE)
     private Date beginnDatum = new Date();
