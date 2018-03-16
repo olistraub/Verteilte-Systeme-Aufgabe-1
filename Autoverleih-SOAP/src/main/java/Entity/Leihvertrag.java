@@ -35,4 +35,49 @@ public class Leihvertrag implements Serializable {
     
     @Temporal(TemporalType.DATE)
     private Date endeDatum = new Date();
+   
+    
+    //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
+    public long getId() {
+        return id;
+    }
+    
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    public Kunde getKunde() {
+        return kunde;
+    }
+    
+    public void setKunde(Kunde kunde) {
+        this.kunde = kunde;
+    }
+    
+    public Fahrzeug getFahrzeug() {
+        return fahrzeug;
+    }
+    
+    public void setFahrzeug(Fahrzeug fahrzeug) {
+        this.fahrzeug = fahrzeug;
+    }
+    
+    public Date getBeginnDatum() {
+        return beginnDatum;
+    }
+    
+    public void setBeginnDatum(Date beginnDatum) {
+        this.beginnDatum = beginnDatum;
+    }
+    
+    public Date getEndeDatum() {
+        return endeDatum;
+    }
+    
+    public void setEndeDatum(Date endeDatum) {
+        this.endeDatum = endeDatum;
+    }
+    //</editor-fold>
+    
+    
 }
