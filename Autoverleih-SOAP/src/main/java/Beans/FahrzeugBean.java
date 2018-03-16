@@ -6,15 +6,19 @@
 package Beans;
 
 import Entity.Fahrzeug;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author OL_SR
  */
+@Stateless
 public class FahrzeugBean extends EntityBean<Fahrzeug, Long>{
     
-    public FahrzeugBean(Class<Fahrzeug> entityClass) {
-        super(entityClass);
+    public FahrzeugBean() {
+        super(Fahrzeug.class);
     } 
+    
+    
     
 }
