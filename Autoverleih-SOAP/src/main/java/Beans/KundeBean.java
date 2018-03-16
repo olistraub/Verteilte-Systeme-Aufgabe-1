@@ -6,12 +6,14 @@
 package Beans;
 
 import Entity.Kunde;
+import javax.ejb.Stateless;
 
 
 /**
  *
  * @author OL_SR
  */
+@Stateless
 public class KundeBean extends EntityBean<Kunde, Long>{
 
     public KundeBean(){
