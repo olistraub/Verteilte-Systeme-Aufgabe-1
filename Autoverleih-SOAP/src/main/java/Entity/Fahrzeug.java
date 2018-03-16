@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -24,10 +25,13 @@ public class Fahrzeug implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
+    @NotNull
     private String hersteller = "";
     
+    @NotNull
     private String modell = "";
     
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date baujahr;
     

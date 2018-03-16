@@ -23,8 +23,21 @@ public class LeihvertragBean extends EntityBean<Leihvertrag, Long>{
     
     
     public List<Leihvertrag> getAllLeihvertragForKunde(long idKunde){
-       return em.createQuery("SELECT l FROM Leihvertrag l WHERE l.kunde = :id ")
+       return em.createQuery("SELECT l FROM Leihvertrag l WHERE l.kunde.id = :id ")
                 .setParameter("id", idKunde)
                 .getResultList();
+    }
+    
+    public Leihvertrag createLeihvertrag(Leihvertrag leihvertrag){
+       List<Leihvertrag> leihverträgeInTime = em.createQuery("SELECT l FROM Leihvertrag l WHERE l.fahrzeug.id = :idFahrzeug AND ((:startDate >= l.beginnDatum AND :startDate <= l.endeDatum) OR (:endDate <= l.endeDatum AND :endDate >= l.beginnDatum) OR (:startDate <= l.beginnDatum AND :endDate >= l.endeDatum))")
+                .setParameter("startDate", leihvertrag.getBeginnDatum())
+                .setParameter("endDate", leihvertrag.getEndeDatum())
+                .setParameter("idFahrzeug", leihvertrag.getFahrzeug().getId())
+                .getResultList();
+       
+       if(!leihverträgeInTime.isEmpty()) throw new RuntimeException("Es existiert bereits ein Leihvertrag für diesen Zeitraum");
+                
+       return update(leihvertrag);
+             
     }
 }

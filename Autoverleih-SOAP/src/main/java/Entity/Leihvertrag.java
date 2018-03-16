@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * Entity für einen Leihvertrag
@@ -30,12 +31,23 @@ public class Leihvertrag implements Serializable {
     @ManyToOne
     private Fahrzeug fahrzeug;
     
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date beginnDatum = new Date();
     
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date endeDatum = new Date();
    
+    
+    public Leihvertrag(){}
+    
+    public Leihvertrag(Kunde kunde, Fahrzeug fahrzeug, Date beginnDatum, Date endeDatum){
+        this.kunde = kunde;
+        this.fahrzeug = fahrzeug;
+        this.beginnDatum = beginnDatum;
+        this.endeDatum = endeDatum;
+    }
     
     //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public long getId() {
