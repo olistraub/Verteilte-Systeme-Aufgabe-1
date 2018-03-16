@@ -10,7 +10,7 @@ package Beans;
  *
  * @author OL_SR
  */
-public class KundeBean extends EntityBean{
+public class KundeBean extends EntityBean<>{
     
     
 }
