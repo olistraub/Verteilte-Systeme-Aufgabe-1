@@ -5,17 +5,16 @@
  */
 package Beans;
 
-import Entity.Kunde;
-
+import Entity.Fahrzeug;
 
 /**
  *
  * @author OL_SR
  */
-public class KundeBean extends EntityBean<Kunde, Long>{
-
-    public KundeBean(){
-        super(Kunde.class);
-    }
+public class FahrzeugBean extends EntityBean<Fahrzeug, Long>{
+    
+    public FahrzeugBean(Class<Fahrzeug> entityClass) {
+        super(entityClass);
+    } 
     
 }
