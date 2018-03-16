@@ -12,7 +12,7 @@ import Entity.Kunde;
  *
  * @author OL_SR
  */
-public class KundeBean extends EntityBean<Kunde, String>{
+public class KundeBean extends EntityBean<Kunde, Long>{
 
     public KundeBean(){
         super(Kunde.class);
