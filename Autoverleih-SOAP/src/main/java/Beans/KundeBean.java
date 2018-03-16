@@ -5,12 +5,17 @@
  */
 package Beans;
 
+import Entity.Kunde;
+
 
 /**
  *
  * @author OL_SR
  */
-public class KundeBean extends EntityBean{
+public class KundeBean extends EntityBean<Kunde, String>{
     
+    public KundeBean(){
+        super(Kunde.class);
+    }
     
 }
