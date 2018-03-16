@@ -18,42 +18,99 @@ import javax.persistence.Id;
 @Entity
 public class Kunde implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private String vorname;
+    private String nachname;
+    private String strasse;
+    private String hausnummer;
+    private String postleitzahl;
+    private String ort;
+    private String land;
 
+    //<editor-fold defaultstate="collapsed" desc="Getter und Setter">
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    
+    public String getVorname() {
+        return vorname;
     }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Kunde)) {
-            return false;
-        }
-        Kunde other = (Kunde) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
     }
-
-    @Override
-    public String toString() {
-        return "Entity.Kunde[ id=" + id + " ]";
+    
+    public String getNachname() {
+        return nachname;
     }
+    
+    public void setNachname(String nachname) {
+        this.nachname = nachname;
+    }
+    
+    public String getStrasse() {
+        return strasse;
+    }
+    
+    public void setStrasse(String strasse) {
+        this.strasse = strasse;
+    }
+    
+    public String getHausnummer() {
+        return hausnummer;
+    }
+    
+    public void setHausnummer(String hausnummer) {
+        this.hausnummer = hausnummer;
+    }
+    
+    public String getPostleitzahl() {
+        return postleitzahl;
+    }
+    
+    public void setPostleitzahl(String postleitzahl) {
+        this.postleitzahl = postleitzahl;
+    }
+    
+    public String getOrt() {
+        return ort;
+    }
+    
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+    
+    public String getLand() {
+        return land;
+    }
+    
+    public void setLand(String land) {
+        this.land = land;
+    }
+//</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
+    public Kunde(){
+    }
+    
+    public Kunde(String vorname, String nachname, String strasse, String hausnummer, String postleitzahl, String ort, String land){
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.strasse = strasse;
+        this.hausnummer = hausnummer;
+        this.postleitzahl = postleitzahl;
+        this.ort = ort;
+        this.land = land;
+    }
+//</editor-fold>
+    
+    
     
 }

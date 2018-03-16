@@ -5,10 +5,12 @@
  */
 package Beans;
 
+
 /**
  *
  * @author OL_SR
  */
-public class KundeBean {
+public class KundeBean extends EntityBean{
+    
     
 }
