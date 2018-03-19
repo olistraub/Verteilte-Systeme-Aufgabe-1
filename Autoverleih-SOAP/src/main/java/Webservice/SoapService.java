@@ -44,16 +44,16 @@ public class SoapService {
     
     @WebMethod
     @WebResult(name = "Kunde")
-    public Kunde registerKunde( @WebParam(name = "vorname")String vorname, @WebParam(name = "nachname")String nachname, 
-            @WebParam(name = "Straße")String straße, @WebParam(name = "Hausnummer")String hausnr,
-            @WebParam(name = "PLZ")String plz, @WebParam(name = "Ort")String ort, @WebParam(name = "Land")String land){
-        return kundeBean.update(new Kunde(vorname, nachname, straße, hausnr, plz, ort, land));
+    public Kunde registerKunde(@WebParam(name = "kunde") Kunde kunde){
+        return kundeBean.update(kunde);
     } 
     
     @WebMethod
     @WebResult(name = "Fahrzeug")
-    public Fahrzeug registerFahreug(@WebParam(name = "hersteller")String hersteller, @WebParam(name = "modell")String modell, @WebParam(name = "baujahr")Date baujahr){
-        return fahrzeugBean.update(new Fahrzeug(hersteller, modell, baujahr));
+    public Fahrzeug registerFahrzeug(@WebParam(name = "fahrzeug") Fahrzeug fahrzeug, @WebParam(name = "baujahrAsLong") long baujahr){ // Workaround for Date
+        Date dateBaujahr = new Date(baujahr);
+        fahrzeug.setBaujahr(dateBaujahr);
+        return fahrzeugBean.update(fahrzeug);
     }
     
     
@@ -65,8 +65,13 @@ public class SoapService {
     
     @WebMethod
     @WebResult(name = "Leihvertrag")
-    public Leihvertrag createLeihvertrag(@WebParam(name = "idKunde")long idKunde,@WebParam(name = "idFahrzeug") long idFahrzeug,@WebParam(name = "startDate") Date startDate,@WebParam(name = "endDate") Date endDate){
-        return leihvertragBean.createLeihvertrag(new Leihvertrag(kundeBean.findById(idKunde), fahrzeugBean.findById(idFahrzeug), startDate, endDate));
+    public Leihvertrag createLeihvertrag(@WebParam(name = "leihvertrag") Leihvertrag leihvertrag, @WebParam(name = "startDatumAsLong") long startDatum, @WebParam(name = "endDatumAsLong") long endDatum){
+        Date startDate = new Date(startDatum);
+        Date endDate = new Date(endDatum);
+        leihvertrag.setBeginnDatum(startDate);
+        leihvertrag.setEndeDatum(endDate);
+        
+        return leihvertragBean.createLeihvertrag(leihvertrag);
     }
     
 }

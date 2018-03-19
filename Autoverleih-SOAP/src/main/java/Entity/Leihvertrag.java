@@ -31,11 +31,11 @@ public class Leihvertrag implements Serializable {
     @ManyToOne
     private Fahrzeug fahrzeug;
     
-    @NotNull
+    
     @Temporal(TemporalType.DATE)
     private Date beginnDatum = new Date();
     
-    @NotNull
+    
     @Temporal(TemporalType.DATE)
     private Date endeDatum = new Date();
    

@@ -31,7 +31,7 @@ public class Fahrzeug implements Serializable {
     @NotNull
     private String modell = "";
     
-    @NotNull
+    
     @Temporal(TemporalType.DATE)
     private Date baujahr;
     

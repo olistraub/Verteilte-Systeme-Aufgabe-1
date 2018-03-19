@@ -35,7 +35,7 @@ public class LeihvertragBean extends EntityBean<Leihvertrag, Long>{
                 .setParameter("idFahrzeug", leihvertrag.getFahrzeug().getId())
                 .getResultList();
        
-       if(!leihverträgeInTime.isEmpty()) throw new RuntimeException("Es existiert bereits ein Leihvertrag für diesen Zeitraum");
+       if(!leihverträgeInTime.isEmpty()) return null;
                 
        return update(leihvertrag);
              
